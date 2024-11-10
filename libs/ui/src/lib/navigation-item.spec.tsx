@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 
-import NavigationItem from './NavigationItem';
+import NavigationItem from './navigation-item';
 
 describe('NavigationItem', () => {
   it('should render successfully', () => {

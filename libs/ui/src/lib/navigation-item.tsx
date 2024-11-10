@@ -1,15 +1,12 @@
+import {LiHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-const StyledNavigationItem = styled.div`
-  color: pink;
+const StyledNavigationItem = styled.li`
+  margin-right: 1rem;
 `;
 
-export function NavigationItem() {
-  return (
-    <StyledNavigationItem>
-      <h1>Welcome to NavigationItem!</h1>
-    </StyledNavigationItem>
-  );
-}
+export const NavigationItem = (props: LiHTMLAttributes<HTMLLIElement>) => {
+  return <StyledNavigationItem>{props.children}</StyledNavigationItem>;
+};
 
 export default NavigationItem;
