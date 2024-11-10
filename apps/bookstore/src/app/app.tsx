@@ -1,64 +1,36 @@
-import styled from 'styled-components';
+import { Route, Routes, Navigate, Link } from 'react-router-dom';
 
-import { Route, Routes, Link } from 'react-router-dom';
+import { BooksFeature } from '@learning-nx/books/feature';
 
-import { Feature } from '@learning-nx/feature';
+// importing the UI library into our App
+import {
+  GlobalStyles,
+  Header,
+  Main,
+  NavigationItem,
+  NavigationList
+} from '@learning-nx/ui'
 
-/* import NxWelcome from './nx-welcome'; */
-
-const StyledApp = styled.div`
-  // Your style here
-`;
 
 export function App() {
   return (
-    <StyledApp>
-      {/* <NxWelcome title="bookstore" /> */}
-      <header>
+    <>
+    <GlobalStyles />
+      <Header>
         <h1>Bookstore</h1>
-      </header>
-
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/feature">Feature</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
+        <NavigationList>
+ <NavigationItem>
+   <Link to="/books">Books</Link>
+ </NavigationItem>
+        </NavigationList>
+      </Header>
+<Main>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route path="/feature" element={<Feature />} />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
+        <Route path="/books" element={<BooksFeature />} />
+        <Route path="/" element={<Navigate to="/books" replace />} />
       </Routes>
-      {/* END: routes */}
-    </StyledApp>
+    </Main>
+    </>
   );
 }
 
