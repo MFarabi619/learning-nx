@@ -1,15 +1,14 @@
+import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-const StyledMain = styled.div`
-  color: pink;
+const StyledMain = styled.main`
+  padding: 0 1rem;
+  width: 100%;
+  max-width: 960px;
 `;
 
-export function Main() {
-  return (
-    <StyledMain>
-      <h1>Welcome to Main!</h1>
-    </StyledMain>
-  );
-}
+export const Main = (props: HTMLAttributes<HTMLElement>) => (
+  <StyledMain>{props.children}</StyledMain>
+)
 
 export default Main;
