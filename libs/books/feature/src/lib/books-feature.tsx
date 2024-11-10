@@ -4,12 +4,12 @@ const StyledFeature = styled.div`
   color: pink;
 `;
 
-export function Feature() {
+export function BooksFeature() {
   return (
     <StyledFeature>
-      <h1>Welcome to Feature!</h1>
+      <h1>Welcome to BooksFeature!</h1>
     </StyledFeature>
   );
 }
 
-export default Feature;
+export default BooksFeature;

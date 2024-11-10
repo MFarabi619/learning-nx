@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@learning-nx/feature": ["libs/books/feature/src/index.ts"],
+      "@learning-nx/books/feature": ["libs/books/feature/src/index.ts"],
       "@learning-nx/ui": ["libs/ui/src/index.ts"]
     }
   },
