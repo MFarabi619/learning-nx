@@ -1,2 +1,2 @@
-export * from './lib/cart/cart.slice';
-export * from './lib/data-access';
+export * from './lib/cart.slice';
+export * from './lib/cart-data-access';

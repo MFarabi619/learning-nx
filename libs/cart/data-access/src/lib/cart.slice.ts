@@ -4,24 +4,24 @@ import {
   createSelector,
   createSlice,
   EntityState,
-  PayloadAction,
 } from '@reduxjs/toolkit';
+import {ICartItem} from '@learning-nx/shared-models';
+import {checkout} from './cart-data-access';
 
 export const CART_FEATURE_KEY = 'cart';
 
-/*
- * Update these interfaces according to your requirements.
- */
-export interface CartEntity {
-  id: number;
+export interface CartState extends EntityState<ICartItem> {
+  cartStatus: 'ready' | 'pending' | 'ordered' | 'error';
+  error: string;
+  order?: string;
 }
 
-export interface CartState extends EntityState<CartEntity> {
-  loadingStatus: 'not loaded' | 'loading' | 'loaded' | 'error';
-  error?: string | null;
-}
+export const cartAdapter = createEntityAdapter<ICartItem>();
 
-export const cartAdapter = createEntityAdapter<CartEntity>();
+export const checkoutCart = createAsyncThunk<{order: string}, ICartItem[]>(
+  'cart/checkoutStatus',
+  (items) => checkout({items})
+)
 
 /**
  * Export an effect using createAsyncThunk from
@@ -40,20 +40,20 @@ export const cartAdapter = createEntityAdapter<CartEntity>();
  * }, [dispatch]);
  * ```
  */
-export const fetchCart = createAsyncThunk<CartEntity[]>(
-  'cart/fetchStatus',
-  async (_, thunkAPI) => {
-    /**
-     * Replace this with your custom fetch call.
-     * For example, `return myApi.getCarts()`;
-     * Right now we just return an empty array.
-     */
-    return Promise.resolve([]);
-  }
-);
+// export const fetchCart = createAsyncThunk<CartEntity[]>(
+//   'cart/fetchStatus',
+//   async (_, thunkAPI) => {
+//     /**
+//      * Replace this with your custom fetch call.
+//      * For example, `return myApi.getCarts()`;
+//      * Right now we just return an empty array.
+//      */
+//     return Promise.resolve([]);
+//   }
+// );
 
 export const initialCartState: CartState = cartAdapter.getInitialState({
-  loadingStatus: 'not loaded',
+  cartStatus: 'ready',
   error: null,
 });
 
@@ -67,18 +67,20 @@ export const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCart.pending, (state: CartState) => {
-        state.loadingStatus = 'loading';
+      .addCase(checkoutCart.pending, (state: CartState) => {
+        state.cartStatus = 'pending';
       })
       .addCase(
-        fetchCart.fulfilled,
-        (state: CartState, action: PayloadAction<CartEntity[]>) => {
-          cartAdapter.setAll(state, action.payload);
-          state.loadingStatus = 'loaded';
+        checkoutCart.fulfilled,
+        (state: CartState, action ) => {
+          // cartAdapter.setAll(state, action.payload);
+          // state.loadingStatus = 'loaded';
+          state.order = action.payload.order;
+          state.cartStatus = 'ordered';
         }
       )
-      .addCase(fetchCart.rejected, (state: CartState, action) => {
-        state.loadingStatus = 'error';
+      .addCase(checkoutCart.rejected, (state: CartState, action) => {
+        state.cartStatus = 'error';
         state.error = action.error.message;
       });
   },
@@ -123,12 +125,26 @@ export const cartActions = cartSlice.actions;
  *
  * See: https://react-redux.js.org/next/api/hooks#useselector
  */
-const { selectAll, selectEntities } = cartAdapter.getSelectors();
+const { selectAll } = cartAdapter.getSelectors();
 
-export const getCartState = (rootState: {
-  [CART_FEATURE_KEY]: CartState;
-}): CartState => rootState[CART_FEATURE_KEY];
+export const getCartState = (rootState:unknown ): CartState => rootState[CART_FEATURE_KEY];
 
-export const selectAllCart = createSelector(getCartState, selectAll);
+export const selectCartItems = createSelector(getCartState, selectAll);
 
-export const selectCartEntities = createSelector(getCartState, selectEntities);
+// export const selectAllCart = createSelector(getCartState, selectAll);
+
+// export const selectCartEntities = createSelector(getCartState, selectEntities);
+
+export const selectCartStatus = createSelector(
+getCartState,
+(state) => state.cartStatus
+);
+
+export const selectOrderNumber = createSelector(
+getCartState,
+(state) => state.order
+);
+
+export const selectTotal = createSelector(selectCartItems, (items) =>
+items.reduce((total, item) => total + item.cost, 0)
+);
