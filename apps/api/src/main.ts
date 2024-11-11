@@ -5,6 +5,7 @@
 
 import express from 'express';
 import * as path from 'path';
+import {IBook} from '@learning-nx/shared-models';
 
 const app = express();
 
@@ -15,7 +16,7 @@ app.get('/api', (req, res) => {
 });
 
 app.get('/api/books', (req, res) => {
-  const books: any[] = [
+  const books: IBook[] = [
     {
       id: 1,
       title: 'The Picture of Dorian Gray',
