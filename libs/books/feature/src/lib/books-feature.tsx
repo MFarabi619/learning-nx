@@ -15,7 +15,9 @@ export const BooksFeature = () => {
 return  (
   <>
     <h2>Books</h2>
-   <Books books={books}/>
+  {/* Pass a stub callback for now */}
+  {/* We'll implement this properly in Chapter 4 */}
+   <Books books={books} onAdd={book => alert(`Added ${book.title}`)}/>
   </>
 )
 }
