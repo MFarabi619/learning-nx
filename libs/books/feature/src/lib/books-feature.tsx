@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import {getBooks } from '@learning-nx/books/data-access'
 import {Books} from '@learning-nx/books/ui'
+import {IBook} from '@learning-nx/shared-models'
 
 export const BooksFeature = () => {
-  const [books, setBooks] = useState<any[]>([]);
+  const [books, setBooks] = useState<IBook[]>([]);
 
   useEffect(() => {
     getBooks().then(setBooks);
