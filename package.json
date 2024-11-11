@@ -18,6 +18,7 @@
     "@nx/cypress": "20.0.6",
     "@nx/eslint": "20.0.6",
     "@nx/eslint-plugin": "20.0.6",
+    "@nx/express": "^20.0.12",
     "@nx/jest": "20.0.6",
     "@nx/js": "20.0.6",
     "@nx/react": "20.0.6",
