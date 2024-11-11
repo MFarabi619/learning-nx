@@ -19,6 +19,7 @@
       "@learning-nx/books/feature": ["libs/books/feature/src/index.ts"],
       "@learning-nx/books/ui": ["libs/books/ui/src/index.ts"],
       "@learning-nx/cart/data-access": ["libs/cart/data-access/src/index.ts"],
+      "@learning-nx/cart/feature": ["libs/cart/feature/src/index.ts"],
       "@learning-nx/shared-models": ["libs/shared-models/src/index.ts"],
       "@learning-nx/ui": ["libs/ui/src/index.ts"]
     }
