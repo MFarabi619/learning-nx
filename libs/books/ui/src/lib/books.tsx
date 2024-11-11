@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import {Book} from './book'
+import {IBook} from '@learning-nx/shared-models'
 
 export interface BooksProps {
-  books: any[];
+  books: IBook[];
   // New prop
-  onAdd: (book: any) => void;
+  onAdd: (book: IBook) => void;
 }
 
 const StyledBooks = styled.div`
